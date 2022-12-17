@@ -37,25 +37,26 @@ const drawRect = (e) => {
       prevMouseX - e.offsetX,
       prevMouseY - e.offsetY
     );
+  } else {
+    ctx.fillRect(
+      e.offsetX,
+      e.offsetY,
+      prevMouseX - e.offsetX,
+      prevMouseY - e.offsetY
+    );
   }
-  ctx.fillRect(
-    e.offsetX,
-    e.offsetY,
-    prevMouseX - e.offsetX,
-    prevMouseY - e.offsetY
-  );
 };
 
 const drawCircle = (e) => {
-  ctx.beingPath();
+  ctx.beginPath();
   let radius =
     Math.sqrt(Math.pow(prevMouseX - e.offsetX, 2)) +
     Math.sqrt(Math.pow(prevMouseY - e.offsetY, 2));
-  ctx.arc(prevMouseX, prevMouseY, 50, 0, 2 * Math.PI);
+  ctx.arc(prevMouseX, prevMouseY, radius, 0, 2 * Math.PI);
   fillColor.checked ? ctx.fill() : ctx.stroke();
 };
 
-const drawTriangle = () => {
+const drawTriangle = (e) => {
   ctx.beginPath();
   ctx.moveTo(prevMouseX, prevMouseY);
   ctx.lineTo(e.offsetX, e.offsetY);
@@ -77,7 +78,7 @@ const startDraw = (e) => {
 
 const drawing = (e) => {
   if (!isDrawing) return;
-  ctx.getImageData(snapshot, 0, 0);
+  ctx.putImageData(snapshot, 0, 0);
 
   if (selectedTool === "brush" || selectedTool === "eraser") {
     ctx.strokeStyle = selectedTool === "eraser" ? "#fff" : selectedColor;
@@ -88,7 +89,7 @@ const drawing = (e) => {
   } else if (selectedTool === "circle") {
     drawCircle(e);
   } else {
-    drawT(e);
+    drawTriangle(e);
   }
 };
 
@@ -119,13 +120,14 @@ colorPicker.addEventListener("change", () => {
 });
 
 clearCanvas.addEventListener("click", () => {
-  ctx.clearReact(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   setCanvasBackground();
 });
 
 saveImg.addEventListener("click", () => {
   const link = document.createElement("a");
   link.download = `${Date.now()}.jpg`;
+  console.log("canvas.toDataURL()", canvas.toDataURL());
   link.href = canvas.toDataURL();
   link.click();
 });

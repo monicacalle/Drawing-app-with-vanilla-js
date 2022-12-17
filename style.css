@@ -10,7 +10,7 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-color: rgb(142, 217, 216);
+  background-color: rgb(17, 36, 87);
 }
 .container {
   display: flex;
@@ -56,6 +56,11 @@ section {
   width: 14px;
 }
 
+#fill-color:hover ~ label {
+  color: #4a98f7;
+  cursor: pointer;
+}
+
 #fill-color:checked ~ label {
   color: #4a98f7;
 }
@@ -87,23 +92,23 @@ section {
   background: inherit;
   border-radius: inherit;
   border: 2px solid #fff;
-  transform: translate(-50% -50%);
+  transform: translate(-50%, -50%);
 }
 
-.colors .option :nth-child(1) {
+.colors .option:nth-child(1) {
   background-color: #fff;
   border: 1px solid #bfbfbf;
 }
-.colors .option :nth-child(2) {
+.colors .option:nth-child(2) {
   background-color: #000;
 }
-.colors .option :nth-child(3) {
+.colors .option:nth-child(3) {
   background-color: #e02020;
 }
-.colors .option :nth-child(4) {
+.colors .option:nth-child(4) {
   background-color: #6dd400;
 }
-.colors .option :nth-child(5) {
+.colors .option:nth-child(5) {
   background-color: #4a98f7;
 }
 
